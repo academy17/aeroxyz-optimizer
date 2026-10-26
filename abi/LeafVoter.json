@@ -1,0 +1,2242 @@
+[
+ {
+  "type": "constructor",
+  "inputs": [
+   {
+    "name": "_params",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "governor",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "configAdmin",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "leafMessageOrchestrator",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "receiptToken",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "factoryRegistry",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "gaugeManager",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "allocationCooldown",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "minIncentiveDuration",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "maxGauges",
+      "type": "uint256",
+      "internalType": "uint256"
+     },
+     {
+      "name": "adapterAuthority",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "emissionsHandler",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "emergencyCouncil",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "initialConfiguration",
+      "type": "tuple",
+      "components": [
+       {
+        "name": "voterConfigurer",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "tokenWhitelister",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "chainStatusAuthority",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "factoryRegistryAdmin",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "moduleAdmin",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "gasConfigurer",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "nativeWithdrawer",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "bootstrapAdmin",
+        "type": "address",
+        "internalType": "address"
+       },
+       {
+        "name": "collectFeesGasLimit",
+        "type": "uint256",
+        "internalType": "uint256"
+       }
+      ],
+      "internalType": "struct ILeafVoter.InitialConfiguration"
+     }
+    ],
+    "internalType": "struct ILeafVoter.ConstructorParams"
+   }
+  ],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "AccessControlBadConfirmation",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "AccessControlUnauthorizedAccount",
+  "type": "error",
+  "inputs": [
+   {
+    "name": "account",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "neededRole",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   }
+  ]
+ },
+ {
+  "name": "AllocationExpired",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "AmountTooLow",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ArrayLengthMismatch",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "CeilingExceeded",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ChainAllocationMismatch",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ChainNotActiveOrSunset",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ChainStatusUnchanged",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "CooldownActive",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ExceedsMaxGauges",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "GaugeAlreadyActivated",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "GaugeAlreadyRegistered",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "GaugeNotRegistered",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "GaugesNotStrictlyAscending",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "InvalidChainStatusTransition",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "InvalidStatus",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "LastRoleHolder",
+  "type": "error",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   }
+  ]
+ },
+ {
+  "name": "LocalVotingDisabled",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotAuthorized",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotGaugeManager",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotMessageOrchestrator",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotOperator",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ReentrancyGuardReentrantCall",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "StakeExpired",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "StakeSnapshotMissing",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "SunsetDeallocOnly",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "UnexpectedValue",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ZeroAddress",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ZeroAllocation",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ZeroDuration",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ZeroGasLimit",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "AllocationCooldownSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_allocationCooldown",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "CanVoteForZeroCapGaugesSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_allowed",
+    "type": "bool",
+    "indexed": false,
+    "internalType": "bool"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "ChainAllocated",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_allocationDelta",
+    "type": "uint128",
+    "indexed": false,
+    "internalType": "uint128"
+   },
+   {
+    "name": "_chainAllocation",
+    "type": "uint128",
+    "indexed": false,
+    "internalType": "uint128"
+   },
+   {
+    "name": "_emissionsPerVP",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "ChainStatusSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_status",
+    "type": "uint8",
+    "indexed": false,
+    "internalType": "enum IVoterCommon.ChainStatus"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "CollectFeesGasLimitSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_gasLimit",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "CooldownReductionApplied",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_reduction",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   },
+   {
+    "name": "_accumulated",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "Deallocated",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_amount",
+    "type": "uint128",
+    "indexed": false,
+    "internalType": "uint128"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "EmergencyDeallocationApplied",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "EmissionsForfeited",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint128",
+    "indexed": false,
+    "internalType": "uint128"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "EmissionsMinted",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_recipients",
+    "type": "address[]",
+    "indexed": false,
+    "internalType": "address[]"
+   },
+   {
+    "name": "_amounts",
+    "type": "uint128[]",
+    "indexed": false,
+    "internalType": "uint128[]"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "FeeClaimFailed",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_votingRewardsManager",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "FeeClaimSucceeded",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_votingRewardsManager",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "GaugeActivated",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "activationCursor",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "GaugeCapSettled",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_effectiveShare",
+    "type": "uint128",
+    "indexed": false,
+    "internalType": "uint128"
+   },
+   {
+    "name": "_surplusDelta",
+    "type": "uint128",
+    "indexed": false,
+    "internalType": "uint128"
+   },
+   {
+    "name": "_cap",
+    "type": "uint128",
+    "indexed": false,
+    "internalType": "uint128"
+   },
+   {
+    "name": "_gaugeWeight",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "GaugeRegistered",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "activated",
+    "type": "bool",
+    "indexed": false,
+    "internalType": "bool"
+   },
+   {
+    "name": "registrationCursor",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "GaugeWeightClamped",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_detectedWeight",
+    "type": "int256",
+    "indexed": false,
+    "internalType": "int256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "GaugesAllocated",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_allocations",
+    "type": "tuple[]",
+    "indexed": false,
+    "components": [
+     {
+      "name": "gauge",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "allocated",
+      "type": "uint128",
+      "internalType": "uint128"
+     },
+     {
+      "name": "data",
+      "type": "bytes",
+      "internalType": "bytes"
+     }
+    ],
+    "internalType": "struct IVoterCommon.GaugeAllocation[]"
+   },
+   {
+    "name": "_emissionsPerVP",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "IncentiveClaimFailed",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_votingRewardsManager",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "IncentiveClaimSucceeded",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_votingRewardsManager",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "indexed": false,
+    "internalType": "address"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "LocalVotingEnabledSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_enabled",
+    "type": "bool",
+    "indexed": false,
+    "internalType": "bool"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "MaxAccumulatedCooldownReductionSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_maxAccumulatedCooldownReduction",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "MaxGaugesSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_maxGauges",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "MinIncentiveDurationSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_minIncentiveDuration",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "OperatorSet",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_operator",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "Redeemed",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_redeemer",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "RoleAdminChanged",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "indexed": true,
+    "internalType": "bytes32"
+   },
+   {
+    "name": "previousAdminRole",
+    "type": "bytes32",
+    "indexed": true,
+    "internalType": "bytes32"
+   },
+   {
+    "name": "newAdminRole",
+    "type": "bytes32",
+    "indexed": true,
+    "internalType": "bytes32"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "RoleGranted",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "indexed": true,
+    "internalType": "bytes32"
+   },
+   {
+    "name": "account",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "sender",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "RoleRevoked",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "indexed": true,
+    "internalType": "bytes32"
+   },
+   {
+    "name": "account",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "sender",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "DEFAULT_ADMIN_ROLE",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "EMISSIONS_HANDLER",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "FACTORY_REGISTRY",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "contract IFactoryRegistry"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "GAUGE_MANAGER",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "MIN_REDEEM_AMOUNT",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "ORCHESTRATOR",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "contract ILeafMessageOrchestrator"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "RECEIPT_TOKEN",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "contract IReceiptTokenExtensions"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "ZERO_GAUGE",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "accumulatedCooldownReduction",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_reduction",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "activateGauge",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "allocateGauges",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_gauges",
+    "type": "tuple[]",
+    "components": [
+     {
+      "name": "gauge",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "allocated",
+      "type": "uint128",
+      "internalType": "uint128"
+     },
+     {
+      "name": "data",
+      "type": "bytes",
+      "internalType": "bytes"
+     }
+    ],
+    "internalType": "struct IVoterCommon.GaugeAllocation[]"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "payable"
+ },
+ {
+  "name": "allocatedGauges",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_gauges",
+    "type": "address[]",
+    "internalType": "address[]"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "allocationCooldown",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_cooldown",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "allocations",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_allocated",
+    "type": "uint128",
+    "internalType": "uint128"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "applyChainAllocation",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_allocationDelta",
+    "type": "uint128",
+    "internalType": "uint128"
+   },
+   {
+    "name": "_emissionsPerVP",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_refreshEmissionsPerVP",
+    "type": "bool",
+    "internalType": "bool"
+   },
+   {
+    "name": "_refreshShape",
+    "type": "bool",
+    "internalType": "bool"
+   },
+   {
+    "name": "_snapshot",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "staked",
+      "type": "uint128",
+      "internalType": "uint128"
+     },
+     {
+      "name": "stakeEnd",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "isPermanent",
+      "type": "bool",
+      "internalType": "bool"
+     }
+    ],
+    "internalType": "struct IVoterCommon.TokenSnapshot"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "applyCooldownReduction",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_reduction",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "applyEmergencyDeallocation",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_amount",
+    "type": "uint128",
+    "internalType": "uint128"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "applyGaugeAllocations",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_expiry",
+    "type": "uint48",
+    "internalType": "uint48"
+   },
+   {
+    "name": "_emissionsPerVP",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_refreshEmissionsPerVP",
+    "type": "bool",
+    "internalType": "bool"
+   },
+   {
+    "name": "_refreshShape",
+    "type": "bool",
+    "internalType": "bool"
+   },
+   {
+    "name": "_newSnapshot",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "staked",
+      "type": "uint128",
+      "internalType": "uint128"
+     },
+     {
+      "name": "stakeEnd",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "isPermanent",
+      "type": "bool",
+      "internalType": "bool"
+     }
+    ],
+    "internalType": "struct IVoterCommon.TokenSnapshot"
+   },
+   {
+    "name": "_gauges",
+    "type": "tuple[]",
+    "components": [
+     {
+      "name": "gauge",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "allocated",
+      "type": "uint128",
+      "internalType": "uint128"
+     },
+     {
+      "name": "data",
+      "type": "bytes",
+      "internalType": "bytes"
+     }
+    ],
+    "internalType": "struct IVoterCommon.GaugeAllocation[]"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_callParamsList",
+    "type": "tuple[]",
+    "components": [
+     {
+      "name": "gauge",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "allocated",
+      "type": "uint128",
+      "internalType": "uint128"
+     },
+     {
+      "name": "data",
+      "type": "bytes",
+      "internalType": "bytes"
+     }
+    ],
+    "internalType": "struct ILeafVoter.CheckpointData[]"
+   }
+  ],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "chainStatus",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_status",
+    "type": "uint8",
+    "internalType": "enum IVoterCommon.ChainStatus"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "claimRewards",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_feeClaims",
+    "type": "tuple[]",
+    "components": [
+     {
+      "name": "votingRewardsManager",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "maxCheckpoints",
+      "type": "uint256",
+      "internalType": "uint256"
+     }
+    ],
+    "internalType": "struct ILeafVoter.FeeClaim[]"
+   },
+   {
+    "name": "_incentiveClaims",
+    "type": "tuple[]",
+    "components": [
+     {
+      "name": "votingRewardsManager",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "programId",
+      "type": "uint256",
+      "internalType": "uint256"
+     },
+     {
+      "name": "maxCheckpoints",
+      "type": "uint256",
+      "internalType": "uint256"
+     }
+    ],
+    "internalType": "struct ILeafVoter.IncentiveClaim[]"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "collectFeesGasLimit",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_gasLimit",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "emissionsPerVP",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_emissionsPerVP",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "forfeitEmissions",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_amount",
+    "type": "uint128",
+    "internalType": "uint128"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "gaugeSlopeChanges",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_expiry",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_slopeDelta",
+    "type": "int128",
+    "internalType": "int128"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "gaugeStates",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_ceiling",
+    "type": "uint128",
+    "internalType": "uint128"
+   },
+   {
+    "name": "_claimed",
+    "type": "uint128",
+    "internalType": "uint128"
+   },
+   {
+    "name": "_lastSettlement",
+    "type": "uint48",
+    "internalType": "uint48"
+   },
+   {
+    "name": "_isRegistered",
+    "type": "bool",
+    "internalType": "bool"
+   },
+   {
+    "name": "_isActivated",
+    "type": "bool",
+    "internalType": "bool"
+   },
+   {
+    "name": "_surplus",
+    "type": "uint128",
+    "internalType": "uint128"
+   },
+   {
+    "name": "_lastIndex",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_lastTimeIndex",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_point",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "bias",
+      "type": "int128",
+      "internalType": "int128"
+     },
+     {
+      "name": "slope",
+      "type": "int128",
+      "internalType": "int128"
+     },
+     {
+      "name": "ts",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "permanentStakeBalance",
+      "type": "uint128",
+      "internalType": "uint128"
+     }
+    ],
+    "internalType": "struct IVoterCommon.Point"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "getRoleAdmin",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "getRoleMember",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   },
+   {
+    "name": "index",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "getRoleMemberCount",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "getRoleMembers",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address[]",
+    "internalType": "address[]"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "grantRole",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   },
+   {
+    "name": "account",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "hasRole",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   },
+   {
+    "name": "account",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "index",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_index",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "indexAtBoundary",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_boundary",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_indexSnapshot",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "isActivated",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_isActivated",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "lastSettlement",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_ts",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "latestTokenSnapshot",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_staked",
+    "type": "uint128",
+    "internalType": "uint128"
+   },
+   {
+    "name": "_stakeEnd",
+    "type": "uint48",
+    "internalType": "uint48"
+   },
+   {
+    "name": "_isPermanent",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "localVotingEnabled",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_enabled",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "maxAccumulatedCooldownReduction",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_maxAccumulatedCooldownReduction",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "maxGauges",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_maxGauges",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "minIncentiveDuration",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_minIncentiveDuration",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "mintEmissions",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_recipients",
+    "type": "address[]",
+    "internalType": "address[]"
+   },
+   {
+    "name": "_amounts",
+    "type": "uint128[]",
+    "internalType": "uint128[]"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "operator",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_operator",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "projectedCumulativeRewardShare",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_cumulativeRewardShare",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "redeem",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_gasLimit",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_refundRecipient",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "payable"
+ },
+ {
+  "name": "registerGauge",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_activate",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "renounceRole",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   },
+   {
+    "name": "callerConfirmation",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "revokeRole",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "role",
+    "type": "bytes32",
+    "internalType": "bytes32"
+   },
+   {
+    "name": "account",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setAllocationCooldown",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_allocationCooldown",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setCanVoteForZeroCapGauges",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_allowed",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setChainStatus",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_status",
+    "type": "uint8",
+    "internalType": "enum IVoterCommon.ChainStatus"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setCollectFeesGasLimit",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gasLimit",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setLocalVotingEnabled",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_enabled",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setMaxAccumulatedCooldownReduction",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_maxAccumulatedCooldownReduction",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setMaxGauges",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_maxGauges",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setMinIncentiveDuration",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_minIncentiveDuration",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "setOperator",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_operator",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "settleGauge",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_cumulativeRewardShare",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "supportsInterface",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "interfaceId",
+    "type": "bytes4",
+    "internalType": "bytes4"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "surplusAccrued",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_surplus",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "timeIndex",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_timeIndex",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "timeIndexAtBoundary",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_boundary",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_timeIndexSnapshot",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "tokenSnapshot",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_staked",
+    "type": "uint128",
+    "internalType": "uint128"
+   },
+   {
+    "name": "_stakeEnd",
+    "type": "uint48",
+    "internalType": "uint48"
+   },
+   {
+    "name": "_isPermanent",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "tokenStates",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_operator",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_lastAllocated",
+    "type": "uint48",
+    "internalType": "uint48"
+   },
+   {
+    "name": "_canVoteForZeroCapGauges",
+    "type": "bool",
+    "internalType": "bool"
+   },
+   {
+    "name": "_chainAllocation",
+    "type": "uint128",
+    "internalType": "uint128"
+   }
+  ],
+  "stateMutability": "view"
+ }
+]

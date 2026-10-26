@@ -1,0 +1,305 @@
+[
+ {
+  "type": "constructor",
+  "inputs": [
+   {
+    "name": "_factoryRegistry",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_leafVoter",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "GaugeFactoryNotApproved",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ModuleAlreadyRegistered",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ModuleNotRegistered",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotAuthorized",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ReentrancyGuardReentrantCall",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "TargetAlreadyLinked",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "TargetFactoryMismatch",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "TargetNotRecorded",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "WrongModule",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ZeroAddress",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "GaugeCreated",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_target",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_module",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_gaugeFactory",
+    "type": "address",
+    "indexed": false,
+    "internalType": "address"
+   },
+   {
+    "name": "_votingRewardsManager",
+    "type": "address",
+    "indexed": false,
+    "internalType": "address"
+   },
+   {
+    "name": "_creator",
+    "type": "address",
+    "indexed": false,
+    "internalType": "address"
+   },
+   {
+    "name": "_activated",
+    "type": "bool",
+    "indexed": false,
+    "internalType": "bool"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "ModuleDeregistered",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_module",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "ModuleRegistered",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_module",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "FACTORY_REGISTRY",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "contract IFactoryRegistry"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "LEAF_VOTER",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "contract ILeafVoter"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "activateGauge",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "createGauge",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_request",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "creator",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "gaugeFactory",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "target",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "factoryData",
+      "type": "bytes",
+      "internalType": "bytes"
+     },
+     {
+      "name": "activate",
+      "type": "bool",
+      "internalType": "bool"
+     }
+    ],
+    "internalType": "struct IGaugeManager.GaugeCreationRequest"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "deregisterModule",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_module",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "isModule",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_module",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_isModule",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "moduleForGauge",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_module",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "modules",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "_moduleList",
+    "type": "address[]",
+    "internalType": "address[]"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "registerModule",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_module",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ }
+]

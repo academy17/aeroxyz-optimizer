@@ -1,0 +1,1519 @@
+[
+ {
+  "type": "constructor",
+  "inputs": [
+   {
+    "name": "_voter",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_gaugeFactory",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_wrappedNative",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_initialRewards",
+    "type": "address[]",
+    "internalType": "address[]"
+   }
+  ],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "FeeCollectionFailed",
+  "type": "error",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "internalType": "address"
+   }
+  ]
+ },
+ {
+  "name": "InsufficientAmount",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "InsufficientDuration",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "InsufficientProgramBalance",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "InvalidCheckpointIterations",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "InvalidProgramId",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "InvalidStart",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NoGlobalCheckpoint",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotAuthorized",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotCreator",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotGaugeFactory",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotListed",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotVoter",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "NotWrappedNative",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ProgramNotEnded",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ProgramNotFound",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ReentrancyGuardReentrantCall",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "SafeCastOverflow",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "SafeCastUnderflow",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "SafeERC20FailedOperation",
+  "type": "error",
+  "inputs": [
+   {
+    "name": "token",
+    "type": "address",
+    "internalType": "address"
+   }
+  ]
+ },
+ {
+  "name": "StaleCheckpointHistory",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "TooSoon",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ZeroAddress",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "ZeroCheckpoints",
+  "type": "error",
+  "inputs": []
+ },
+ {
+  "name": "Checkpoint",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_from",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_weight",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "ClaimFees",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_token",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "ClaimIncentives",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "FeesCollected",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_token",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "GlobalPointsAdvanced",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_caller",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_globalCheckpointIndex",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "IncentiveCreated",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_token",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_creator",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_start",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   },
+   {
+    "name": "_duration",
+    "type": "uint48",
+    "indexed": false,
+    "internalType": "uint48"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "IncentiveSwept",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   },
+   {
+    "name": "_creator",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "NotifyFeesAmount",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_gauge",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_token",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "indexed": false,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "Reset",
+  "type": "event",
+  "inputs": [
+   {
+    "name": "_from",
+    "type": "address",
+    "indexed": true,
+    "internalType": "address"
+   },
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "indexed": true,
+    "internalType": "uint256"
+   }
+  ],
+  "anonymous": false
+ },
+ {
+  "name": "ACCUMULATOR_ORIGIN",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "MAX_CHECKPOINT_ITERATIONS",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "advanceGlobalPoints",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_maxIterations",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "advanceGlobalPoints",
+  "type": "function",
+  "inputs": [],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "balanceOfNFTAt",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_timestamp",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "bufferedFees0",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "bufferedFees1",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "checkpoint",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_allocated",
+    "type": "uint128",
+    "internalType": "uint128"
+   },
+   {
+    "name": "_stakeEnd",
+    "type": "uint48",
+    "internalType": "uint48"
+   },
+   {
+    "name": "_data",
+    "type": "bytes",
+    "internalType": "bytes"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "claimFees",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "claimIncentives",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_recipient",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "createIncentiveProgram",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_token",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_start",
+    "type": "uint48",
+    "internalType": "uint48"
+   },
+   {
+    "name": "_duration",
+    "type": "uint48",
+    "internalType": "uint48"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "earnedFees",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "earnedIncentives",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_maxCheckpoints",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "feeClaimState",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "lastGlobalCp",
+      "type": "uint64",
+      "internalType": "uint64"
+     },
+     {
+      "name": "lastUserCp",
+      "type": "uint64",
+      "internalType": "uint64"
+     }
+    ],
+    "internalType": "struct IVotingRewardsManager.ClaimState"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "feeRewardPerVotingPower",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "feeReward0",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "feeReward1",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "feeReward0xTime",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "feeReward1xTime",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "feeRewardPerVotingPowerAt",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_checkpointIndex",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "feeReward0",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "feeReward1",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "feeReward0xTime",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "feeReward1xTime",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "flushFees",
+  "type": "function",
+  "inputs": [],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "gauge",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "gaugeFactory",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "getPriorBalanceIndex",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_timestamp",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "getPriorSupplyIndex",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_timestamp",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "globalCheckpointIndex",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "globalRewardPointHistory",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_index",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "bias",
+      "type": "int128",
+      "internalType": "int128"
+     },
+     {
+      "name": "slope",
+      "type": "int128",
+      "internalType": "int128"
+     },
+     {
+      "name": "ts",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "permanentStakeBalance",
+      "type": "uint128",
+      "internalType": "uint128"
+     },
+     {
+      "name": "zeroSupplySeconds",
+      "type": "uint48",
+      "internalType": "uint48"
+     }
+    ],
+    "internalType": "struct IVotingCheckpoints.GlobalPoint"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentive",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "token",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "amount",
+      "type": "uint256",
+      "internalType": "uint256"
+     },
+     {
+      "name": "rate",
+      "type": "uint256",
+      "internalType": "uint256"
+     },
+     {
+      "name": "start",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "end",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "creator",
+      "type": "address",
+      "internalType": "address"
+     }
+    ],
+    "internalType": "struct IIncentiveStreaming.IncentiveProgram"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentiveClaimState",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "lastGlobalCp",
+      "type": "uint64",
+      "internalType": "uint64"
+     },
+     {
+      "name": "lastUserCp",
+      "type": "uint64",
+      "internalType": "uint64"
+     }
+    ],
+    "internalType": "struct IVotingRewardsManager.ClaimState"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentiveCount",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentiveCountByCreator",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_creator",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentiveCountByToken",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_token",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentives",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_programIds",
+    "type": "uint256[]",
+    "internalType": "uint256[]"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "tuple[]",
+    "components": [
+     {
+      "name": "token",
+      "type": "address",
+      "internalType": "address"
+     },
+     {
+      "name": "amount",
+      "type": "uint256",
+      "internalType": "uint256"
+     },
+     {
+      "name": "rate",
+      "type": "uint256",
+      "internalType": "uint256"
+     },
+     {
+      "name": "start",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "end",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "creator",
+      "type": "address",
+      "internalType": "address"
+     }
+    ],
+    "internalType": "struct IIncentiveStreaming.IncentiveProgram[]"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentivesByCreator",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_creator",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_start",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_end",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256[]",
+    "internalType": "uint256[]"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "incentivesByToken",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_token",
+    "type": "address",
+    "internalType": "address"
+   },
+   {
+    "name": "_start",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_end",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256[]",
+    "internalType": "uint256[]"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "isReward",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_token",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "bool",
+    "internalType": "bool"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "lastFeeUpdate",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "lastPendingFees0",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "lastPendingFees1",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "permanentStakeBalance",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint128",
+    "internalType": "uint128"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "remainingAmount",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "rewards",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_index",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "rewardsListLength",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "slopeChanges",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_timestamp",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_slopeChange",
+    "type": "int128",
+    "internalType": "int128"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "stakeExpiry",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_stakeEnd",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "supplyAccumulatorAt",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_checkpointIndex",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "sharePerVote",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "weightedSharePerVote",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "supplyAt",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_timestamp",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "sweep",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [],
+  "stateMutability": "nonpayable"
+ },
+ {
+  "name": "sweptAmount",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_programId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_amount",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "token0",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "token1",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "totalSupply",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "userRewardCheckpointIndex",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "_userRewardCheckpointIndex",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "userRewardPointHistory",
+  "type": "function",
+  "inputs": [
+   {
+    "name": "_tokenId",
+    "type": "uint256",
+    "internalType": "uint256"
+   },
+   {
+    "name": "_index",
+    "type": "uint256",
+    "internalType": "uint256"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "",
+    "type": "tuple",
+    "components": [
+     {
+      "name": "bias",
+      "type": "int128",
+      "internalType": "int128"
+     },
+     {
+      "name": "slope",
+      "type": "int128",
+      "internalType": "int128"
+     },
+     {
+      "name": "ts",
+      "type": "uint48",
+      "internalType": "uint48"
+     },
+     {
+      "name": "permanent",
+      "type": "uint128",
+      "internalType": "uint128"
+     }
+    ],
+    "internalType": "struct IVotingCheckpoints.UserPoint"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "voter",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "name": "wrappedNative",
+  "type": "function",
+  "inputs": [],
+  "outputs": [
+   {
+    "name": "",
+    "type": "address",
+    "internalType": "address"
+   }
+  ],
+  "stateMutability": "view"
+ },
+ {
+  "type": "receive",
+  "stateMutability": "payable"
+ }
+]
