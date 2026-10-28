@@ -33,7 +33,7 @@ Run `fetch` first, then `optimize`. `optimize` works offline from `data/dashboar
 
 A chain with no RPC, or one the RPC refuses, is skipped with a warning and left out of the allocation. Check the `fetch` log and the `Saved ... pools on ...` line to see which chains were covered.
 
-`fetch` also takes `--horizon-hours` (default 47) and `--fee-lookback-hours` (default 48). `optimize` also takes `--max-pools` to override the on-chain gauge cap (per chain).
+`fetch` also takes `--horizon-hours` (default 47) and `--fee-lookback-hours` (default 48). `optimize` also takes `--max-pools` to override the on-chain gauge cap (per chain), `--shrink` (default 0.25, 0 turns it off) and `--max-share` (default 25, the most % of AP on one pool; 100 turns it off). See [Model](#model).
 
 Outputs:
 
@@ -50,13 +50,20 @@ For each active gauge:
 
 Pools from all chains compete for the same AP. Our expected return is Σ R·x/(W+x), with Σx = our AP and at most `maxGauges` (20) pools per chain, since each chain has its own `LeafVoter`. `optimizer.py` solves it in two parts:
 
-1. **Split for a fixed pool set.** The return has diminishing returns in x, so the optimum is closed form: `x = sqrt(R·W/λ) − W`, where the multiplier λ is bisected until the amounts sum to our AP (a Lagrangian / water-filling solution).
+1. **Split for a fixed pool set.** The return has diminishing returns in x, so the optimum is closed form: `x = sqrt(R·W/λ) − W`, clipped to `[0, cap]`, where the multiplier λ is bisected until the amounts sum to our AP (a Lagrangian / water-filling solution).
 2. **Choosing the set.** The gauge cap makes this combinatorial. Start from each chain's top `maxGauges` pools of the uncapped solution, then run a 1-swap local search within each chain over its top 80 candidates, keeping a swap if it adds more than $0.50. This is a heuristic and is not guaranteed to find the global best set.
+
+Other voters pile into high-yield pools during the lock, so a pool's yield at fetch time overstates what it pays over 47h. Two guards handle this:
+
+- **Shrink (`--shrink`, default 0.25).** The market rate is ρ = ΣR / ΣW over every pool with revenue. A pool above it, with yield y = R/W, is planned at y′ = ρ + (1 − s)(y − ρ), by raising its W to R/y′. With s = 0.25, a quarter of each pool's excess over the market is assumed to be competed away. Pools at or below the market rate are unchanged.
+- **Cap (`--max-share`, default 25%).** No pool gets more than this share of our AP. If there are fewer pools than 1/cap, the AP is split evenly.
+
+Expected USD in the outputs uses the shrunk W. The "Other AP on pool" column is the live figure.
 
 ## Limitations
 
 - Fees are the trailing-48h rate extrapolated forward, so a recent spike or drop skews the estimate.
-- It assumes other allocators' AP stays fixed during the lock.
+- Other allocators' pile-in is modelled only by the flat shrink. It does not depend on how fast a pool is filling up. The shrink and cap defaults come from launch-week data (Oct 24–28, Base and Arbitrum), and should be rechecked as voting matures.
 
 ## Notes
 

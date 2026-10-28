@@ -46,6 +46,10 @@ def main():
     opt_p = sub.add_parser("optimize", help="Optimize allocation")
     opt_p.add_argument("--max-pools", type=int, help="Max gauges per chain (default: on-chain maxGauges)")
     opt_p.add_argument("--pools", nargs="+", help="Restrict to these pool addresses")
+    opt_p.add_argument("--shrink", type=float, default=optimizer.SHRINK,
+                       help="Pull above-market yields this fraction of the way to the market rate (default 0.25, 0 = off)")
+    opt_p.add_argument("--max-share", type=float, default=optimizer.MAX_SHARE * 100,
+                       help="Max %% of our AP on one pool (default 25, 100 = off)")
 
     args = parser.parse_args()
     if args.command == "fetch":
@@ -54,7 +58,7 @@ def main():
         with open(fetch_allocations.DASHBOARD_PATH) as f:
             dashboard = json.load(f)
         only = {p.lower() for p in args.pools} if args.pools else None
-        out = optimizer.optimize(dashboard, args.max_pools, only)
+        out = optimizer.optimize(dashboard, args.max_pools, only, args.shrink, args.max_share / 100)
         os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
         with open(OUT_PATH, "w") as f:
             json.dump(out, f, indent=2)
@@ -66,7 +70,8 @@ def main():
             logger.info(f"{r['chain']:<10}{r['symbol']:<16}{r['pct']:>4}%  exp ${r['exp_usd']:>9,.2f}")
         for c in out["chains"]:
             logger.info(f"{c['chain']:<10}{c['pct']:>4}% of AP")
-        logger.info(f"{len(out['allocations'])} pools, ${out['exp_usd']:,} over {out['horizon_hours']}h -> {OUT_PATH}")
+        logger.info(f"{len(out['allocations'])} pools, ${out['exp_usd']:,} over {out['horizon_hours']}h "
+                    f"(shrink {args.shrink:.0%}, max {args.max_share:g}% per pool) -> {OUT_PATH}")
     else:
         parser.print_help()
 
