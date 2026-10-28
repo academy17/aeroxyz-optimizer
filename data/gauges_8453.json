@@ -1,5 +1,5 @@
 {
-  "last_block": 52977142,
+  "last_block": 53124489,
   "gauges": [
     {
       "pool": "0x02afd0e8bf2f44384d9cc8b50dd4360b57a1d2ca",
@@ -1365,6 +1365,96 @@
       "pool": "0xa133f1850e98d3844e3ef56717c27c01ac0e5363",
       "gauge": "0xa1e56a1EBb649dD00De01B47f6dff24e4666E76C",
       "vrm": "0xc53e3179B1A9bddfD8E347255eAbe69b32103f8f"
+    },
+    {
+      "pool": "0xb35b5b3f17f4a780ec694202db704be4fc46e2f0",
+      "gauge": "0x41a2e79BEBa348f5C779B8b905b4b107c031f09F",
+      "vrm": "0x6513983B4F009AA28F1322a1463EE7464442E8F7"
+    },
+    {
+      "pool": "0x929312aff9e4611bba5da6adcd08b31eb487bbb5",
+      "gauge": "0xFC023fcF196b2930E0c86C11Cd5DE9A784149a45",
+      "vrm": "0x27Ffc959cB4dc7548572D2395933078fDb7AcBAD"
+    },
+    {
+      "pool": "0x6fcb370eebe3606100cf6644bff3467c3765bd5c",
+      "gauge": "0xB4D04F859C44A874364BB1E1437618a04FC6728D",
+      "vrm": "0xd7eFA58b68fcF6EE240e2a804992E2d8343d85eA"
+    },
+    {
+      "pool": "0x8b0563d613b990d38137ece2837532bd4e92f145",
+      "gauge": "0x8cb572A218200E8266f0F036A49755360F25B93B",
+      "vrm": "0xC91f92240D77d3C753b2C439054361cCd7977246"
+    },
+    {
+      "pool": "0xbbf50a5ba4fe6093675a6f07e31f6c65a781f259",
+      "gauge": "0x359a90bEBBDbA80C42617B54E1C2D46ebe67510C",
+      "vrm": "0x027c13C89722209B60a9351973b7a8e54BE0E99B"
+    },
+    {
+      "pool": "0x0b09f2f7b096016b797943807558fa38119edc8c",
+      "gauge": "0x93f12d770f03Dd296ADa46b590a129ce7816580b",
+      "vrm": "0x3b4553685F094E88C243acA630004C19B4567A7f"
+    },
+    {
+      "pool": "0xf97dc64314813de750169ce924c92564bc9ff411",
+      "gauge": "0x1b4ACa92f7df7370f2EDe1bF6575e54428f82Fd3",
+      "vrm": "0x3cF75b9179A1aFb55C444BEBa80eF903785aC621"
+    },
+    {
+      "pool": "0xfa3d384d2bf6b1f563067cb3d4bd4a388aa79816",
+      "gauge": "0x5bD4b8F7B5247800662E3a72aA6Fd8aD3B6FAe49",
+      "vrm": "0x0B62903D561081D227D411206C4f075853a17A25"
+    },
+    {
+      "pool": "0x428233329c654a21130b66d93074dbf742e7d709",
+      "gauge": "0x0447F6B35d61C93fbEBca2155A55a1E206898891",
+      "vrm": "0x2B6b38A4C2A737dc6AA26b0D204c9305Ad3f428c"
+    },
+    {
+      "pool": "0x0b06280a779222a173cb383ceaff1213f4cb5eb5",
+      "gauge": "0xc09FA77Cdc322CEa16720Ca86D6C857fEc363E05",
+      "vrm": "0xb3346580B564D24a8596055fCFCC213a9eFc2447"
+    },
+    {
+      "pool": "0x58fdedcde143b1c9199c08e6d3aa60a4a8588771",
+      "gauge": "0x601B6406B9e0c85Dd6458d667B1C21065FA5ce34",
+      "vrm": "0xC4b6a34881e8065ee9329456Ec89f6deEE0492Bd"
+    },
+    {
+      "pool": "0x225d996a33b1d058a09c44a14def30556fa40ec9",
+      "gauge": "0x1352099cA120E354f28D6cEF63fa55B5A56CfC27",
+      "vrm": "0x8a71A496E570e56Eac7461A0f1884224115f0b43"
+    },
+    {
+      "pool": "0x9a8f6327dd5a9fc87ee9be06cf7fd2e069efb62b",
+      "gauge": "0x38caF3a1Bf66882771d1A652CBE983049Cf5Fb65",
+      "vrm": "0xb7Bac01797414f9D3E5Eaf185D56377257deB550"
+    },
+    {
+      "pool": "0x1c75709e20d203e8de915d0a1ac8dc4e40fe3d29",
+      "gauge": "0x5110E5b8EB9a57795210B0E46252b1505A12BBf4",
+      "vrm": "0x9fd648926f99A19432E49eDB8b4A54bde65A07F9"
+    },
+    {
+      "pool": "0xc065be76bc4181d2ea7456ea1d1915c442c23dbb",
+      "gauge": "0xAC73e33DaE3F7A46F8435E7538dcC7136bf7b896",
+      "vrm": "0x81De00C8F9D19Ab159c1ed41c555F5C0e8c9eBA4"
+    },
+    {
+      "pool": "0x64f492b7a8ac4b27e35d8e6c3c21e6b31ac69a27",
+      "gauge": "0x60AF91007B1A7eA248Bcc059eC726a22499a42Eb",
+      "vrm": "0x0CB14C7c5C910766740bdE567c231DB0E533E70A"
+    },
+    {
+      "pool": "0x75ab7e9db68d07f0722a58f45bf8afec41383959",
+      "gauge": "0xe9DAcBE0AbFC35c857cE8846496f85b15be9AD1f",
+      "vrm": "0x1b856D8347386aE9aE73c950CD082b70f4A35b9B"
+    },
+    {
+      "pool": "0x7507518c567c185632e95ca80114ce9a660b6943",
+      "gauge": "0xd960Dffab1EE32AFB7EFD4C31FB9E6A77FA0E417",
+      "vrm": "0xD30C3b8b3b14dD0462537eec59D11Db19e895A8a"
     }
   ]
 }
